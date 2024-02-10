@@ -1,4 +1,9 @@
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 import { database } from "@/lib/prisma"
+import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react"
+import Image from 'next/image'
+import { BarbershopInfo } from "./components/BarbershopInfo"
 
 interface BarbershopDetailsProps {
   params: {
@@ -7,20 +12,28 @@ interface BarbershopDetailsProps {
 }
 
 export default async function BarbershopDetailsPage({params}: BarbershopDetailsProps) {
-  const barber = await database.barbershop.findUnique({
+  const barbershop = await database.barbershop.findUnique({
     where: {
       id: params.id
     }
   })
 
-  if(!barber) {
+  if(!barbershop) {
     //TODO redirecionar para home
     return null
   }
   
   return (
     <div>
-      {barber.name}
+      <BarbershopInfo barbershop={barbershop} />
+
+      <Separator className="my-6" />
+
+      <div>
+        <Button>Serviços</Button>
+        <Button>Serviços</Button>
+      </div>
+
     </div>
   )
 }
