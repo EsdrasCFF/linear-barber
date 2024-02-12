@@ -17,7 +17,7 @@ export function BarbershopInfo({barbershop}: BarbershopPros) {
 
   function handleBackClick() {
 
-    router.back()
+    router.replace('/')
   }
   
   return (
