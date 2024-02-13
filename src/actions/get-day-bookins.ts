@@ -3,7 +3,8 @@
 import { database } from "@/lib/prisma"
 import { endOfDay, startOfDay } from "date-fns"
 
-export async function getDayBookings(date: Date) {
+
+export async function getDayBookings(barbershopId: string, date: Date) {
   
   if(!date) {
     return
@@ -14,7 +15,8 @@ export async function getDayBookings(date: Date) {
       date: {
         lte: endOfDay(date),
         gte: startOfDay(date)
-      }
+      },
+      barbershopId
     }
   })
 

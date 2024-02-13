@@ -130,7 +130,7 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
     }
     
     async function refreshBookingHours() {
-      const schedules = await getDayBookings(date!) || []
+      const schedules = await getDayBookings(barbershopId, date!) || []
 
       if(schedules.length < 1) {
         return
@@ -141,7 +141,7 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
 
     refreshBookingHours()
 
-  }, [date])
+  }, [barbershopId, date])
  
   return (
     <Card className="p-0" >
