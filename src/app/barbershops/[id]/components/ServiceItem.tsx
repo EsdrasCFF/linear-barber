@@ -7,16 +7,17 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { priceFormatter } from "@/utils/formatter"
 import { generateDayTimeList } from "@/utils/hours"
-import { Service } from "@prisma/client"
+import { Booking, Service } from "@prisma/client"
 import { format, setHours, setMinutes } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { signIn, useSession } from "next-auth/react"
 import Image from "next/image"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Loader2 } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { ToastAction } from "@radix-ui/react-toast"
 import { useRouter } from "next/navigation"
+import { getDayBookings } from "@/actions/get-day-bookins"
 
 interface ServiceItemProps {
   service: Service;
@@ -28,6 +29,7 @@ interface ServiceItemProps {
 export function ServiceItem({service, isAthenticated, barbershopName, barbershopId}: ServiceItemProps) {
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [hour, setHour] = useState<String | undefined>()
+  const [dayBookings, setDayBookins] = useState<Booking[]>([])
 
   const [submitIsLoading, setSubmitIsLoading] = useState(false)
 
@@ -39,8 +41,34 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
   const router = useRouter()
 
   const timeList = useMemo(() => {
-    return date ? generateDayTimeList(date):[]
-  }, [date])
+
+    if(!date) {
+      return []
+    }
+
+    const times = generateDayTimeList(date)
+    
+    const availableTimes = times.filter((time) => {
+      const timeHour = Number(time.split(':')[0])
+      const timeMinutes = Number(time.split(':')[1])
+
+      const bookings = dayBookings.find((booking) => {
+        const bookingHour = booking.date.getHours()
+        const bookingMinutes = booking.date.getMinutes()
+
+        return bookingHour === timeHour && bookingMinutes === timeMinutes
+      })
+
+      if(!bookings) {
+        return true
+      }
+
+      return false
+    })
+
+    return availableTimes
+    
+  }, [date, dayBookings])
 
   function handleHourClick(time: string) {
     setHour(time)
@@ -96,6 +124,25 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
     }
   }
 
+  useEffect(() => {
+    if(!date) {
+      return
+    }
+    
+    async function refreshBookingHours() {
+      const schedules = await getDayBookings(date!) || []
+
+      if(schedules.length < 1) {
+        return
+      }
+
+      setDayBookins(schedules)
+    }
+
+    refreshBookingHours()
+
+  }, [date])
+ 
   return (
     <Card className="p-0" >
       <CardContent className="p-3">
