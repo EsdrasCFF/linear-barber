@@ -4,18 +4,19 @@ import { saveBooking } from "@/actions/save-booking"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { priceFormatter } from "@/utils/formatter"
 import { generateDayTimeList } from "@/utils/hours"
 import { Service } from "@prisma/client"
-import { time } from "console"
 import { format, setHours, setMinutes } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { signIn, useSession } from "next-auth/react"
 import Image from "next/image"
 import { useMemo, useState } from "react"
 import { Loader2 } from "lucide-react"
+import { toast } from "@/components/ui/use-toast"
+import { ToastAction } from "@radix-ui/react-toast"
+import { useRouter } from "next/navigation"
 
 interface ServiceItemProps {
   service: Service;
@@ -30,8 +31,12 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
 
   const [submitIsLoading, setSubmitIsLoading] = useState(false)
 
+  const [sheetIsOpen, setSheetIsOpen] = useState(false)
+
   const { data } = useSession()
   const userId =  data && data.user.id
+
+  const router = useRouter()
 
   const timeList = useMemo(() => {
     return date ? generateDayTimeList(date):[]
@@ -76,6 +81,14 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
         serviceId: service.id
       })
 
+      setSheetIsOpen(false)
+
+      toast({
+        title: "Reserva realizada com sucesso!.",
+        description: format(newDate, "'Para' dd 'de' MMMM 'às' HH':'mm'.'", {locale: ptBR}),
+        action: <ToastAction altText="Vizualizar" onClick={() => router.push('/bookings')} >Vizualizar</ToastAction>
+      })
+
     } catch(e) {
       console.log(e)
     } finally {
@@ -97,7 +110,7 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
             <div className="flex justify-between items-center" >
               <span className="text-primaryPurple font-bold text-sm" > {priceFormatter.format(Number(service.price))} </span>
               
-              <Sheet>
+              <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen} >
                 <SheetTrigger asChild>
                  <Button variant='secondary' onClick={handleBookingClick}>Reservar</Button>
                 </SheetTrigger>

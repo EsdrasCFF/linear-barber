@@ -3,6 +3,7 @@ import { Inter, Mulish } from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/Footer'
 import { AuthProvider } from '@/providers/auth'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${mulish.className} dark`}>
         <AuthProvider>
+          <Toaster/>
           {children}
           <Footer/>
         </AuthProvider>
