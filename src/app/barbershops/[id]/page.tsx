@@ -38,7 +38,7 @@ export default async function BarbershopDetailsPage({params}: BarbershopDetailsP
 
       <div className="flex flex-col gap-3 px-5" >
         {barbershop.services.map((service) => (
-          <ServiceItem key={service.id} service={service} isAthenticated={!!session?.user} />
+          <ServiceItem key={service.id} service={service} barbershopName={barbershop.name} isAthenticated={!!session?.user} />
         ))}
       </div>
 
