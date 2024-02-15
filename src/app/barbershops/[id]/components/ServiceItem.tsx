@@ -46,11 +46,15 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
       return []
     }
 
-    const times = generateDayTimeList(date)
+    const times = generateDayTimeList(new Date())
+    console.log('times:',times)
     
     const availableTimes = times.filter((time) => {
       const timeHour = Number(time.split(':')[0])
       const timeMinutes = Number(time.split(':')[1])
+
+      console.log('bookings', {dayBookings})
+      console.log('date', date)
 
       const bookings = dayBookings.find((booking) => {
         const bookingHour = booking.date.getHours()
@@ -65,6 +69,8 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
 
       return false
     })
+
+    console.log('availableTImes:', availableTimes)
 
     return availableTimes
     
@@ -117,6 +123,9 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
         action: <ToastAction altText="Vizualizar" onClick={() => router.push('/bookings')} >Vizualizar</ToastAction>
       })
 
+      setDate(undefined)
+      setHour(undefined)
+
     } catch(e) {
       console.log(e)
     } finally {
@@ -125,6 +134,7 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
   }
 
   useEffect(() => {
+    console.log('useEffect sendo chamado com uma nova data:', date)
     if(!date) {
       return
     }

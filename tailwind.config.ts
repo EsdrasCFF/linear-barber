@@ -54,6 +54,7 @@ const config = {
         },
         darkPurple: '#221C3D',
         primaryPurple: '#8162FF',
+        gray1: '#26272B',
         gray3: '#838896',
         secundaryBlack: '#1A1B1F'
       },
