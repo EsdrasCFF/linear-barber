@@ -17,9 +17,9 @@ interface BookingItemProps {
 
 export function BookingItem({booking, variant}: BookingItemProps) {
   return (
-    <Card>
-      <CardContent className="p-5 flex justify-between items-center py-0" >
-        <div className="flex flex-col gap-2 py-5">
+    <Card className="min-w-full" >
+      <CardContent className="p-5 flex justify-between items-center py-0 " >
+        <div className="flex flex-col gap-2 py-5 flex-[3]">
           <Badge className={
               `bg-darkPurple text-primaryPurple hover:bg-darkPurple w-fit
               ${variant && 'bg-gray1 text-gray3'}
@@ -40,7 +40,7 @@ export function BookingItem({booking, variant}: BookingItemProps) {
         
         </div>
 
-        <div className="flex flex-col items-center justify-center border-l border-solid pl-5 w-28">
+        <div className="flex flex-col items-center justify-center border-l border-solid pl-5 w-24">
           <p className="text-sm capitalize">{format(booking.date, 'MMMM', {locale: ptBR})}</p>
           <p className="text-2xl">{format(booking.date, 'dd', {locale: ptBR})}</p>
           <p className="text-sm" >{format(booking.date, "hh':'mm", {locale: ptBR})}</p>

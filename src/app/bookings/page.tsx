@@ -14,9 +14,12 @@ export default async function BookingsPage() {
     return redirect('/')
   }
 
-  const bookings = await database.booking.findMany({
+  const confirmedBookings = await database.booking.findMany({
     where: {
-      userId: session.user.id
+      userId: session.user.id,
+      date: {
+        gte: new Date()
+      }
     },
     include: {
       service: true,
@@ -24,8 +27,21 @@ export default async function BookingsPage() {
     }
   })
 
-  const confirmedBookings = bookings.filter((booking) => isFuture(booking.date))
-  const finishedBookings = bookings.filter((booking) => isPast(booking.date))
+  const finishedBookings = await database.booking.findMany({
+    where: {
+      userId: session.user.id,
+      date: {
+        lt: new Date()
+      }
+    },
+    include: {
+      service: true,
+      barbershop: true
+    }
+  })
+
+  // const confirmedBookings = bookings.filter((booking) => isFuture(booking.date))
+  // const finishedBookings = bookings.filter((booking) => isPast(booking.date))
 
   return (
     <>
