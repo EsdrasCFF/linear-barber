@@ -60,7 +60,7 @@ export function SideMenu() {
 
         {data?.user && (
           <Button variant="outline" className="justify-start" asChild>
-            <Link href="">
+            <Link href="/bookings">
               <CalendarIcon size={16} className="mr-2"/> Agendamentos
             </Link>
           </Button>
