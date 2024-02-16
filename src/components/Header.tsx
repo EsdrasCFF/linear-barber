@@ -11,25 +11,27 @@ import Link from "next/link";
 export function Header() {
 
   return (
-    <Card>
-      <CardContent className="p-5 flex justify-between items-center" >
+    <header>
+      <Card>
+        <CardContent className="p-5 flex justify-between items-center" >
 
-        <Link href='/' >
-          <Image src="/logo.png" width={105} height={20} alt="logo"/>
-        </Link>
-        
-        <Sheet>
-          <SheetTrigger asChild >
-            <Button variant="outline" size="icon" className="w-8 h-8"> <MenuIcon size={18} /> </Button>
-          </SheetTrigger>
+          <Link href='/' >
+            <Image src="/logo.png" width={105} height={20} alt="logo"/>
+          </Link>
+          
+          <Sheet>
+            <SheetTrigger asChild >
+              <Button variant="outline" size="icon" className="w-8 h-8"> <MenuIcon size={18} /> </Button>
+            </SheetTrigger>
 
-          <SheetContent className="p-0">
-            <SideMenu/>
-          </SheetContent>
-        </Sheet>
-        
+            <SheetContent className="p-0">
+              <SideMenu/>
+            </SheetContent>
+          </Sheet>
+          
 
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </header>
   )
 }
