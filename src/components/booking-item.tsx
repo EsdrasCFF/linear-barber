@@ -47,7 +47,7 @@ export function BookingItem({booking, variant}: BookingItemProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Card className="min-w-full" >
+        <Card className="min-w-full hover:cursor-pointer" >
           <CardContent className="p-5 flex justify-between items-center py-0 " >
             <div className="flex flex-col gap-2 py-5 flex-[3]">
               <Badge className={

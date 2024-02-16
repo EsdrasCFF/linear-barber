@@ -1,14 +1,34 @@
-import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { database } from "@/lib/prisma"
 import { BarbershopInfo } from "./components/BarbershopInfo"
 import { ServiceItem } from "./components/ServiceItem"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
+import { Metadata, ResolvedMetadata } from "next"
 
 interface BarbershopDetailsProps {
   params: {
     id: string
+  }
+}
+
+export async function generateMetada({params}: BarbershopDetailsProps, parent: ResolvedMetadata): Promise<Metadata> {
+  const id = params.id
+
+  const barbershops = await database.barbershop.findUnique({
+    where: {
+      id
+    }
+  })
+
+  const previousImage = (await parent).openGraph?.images || []
+
+  return {
+    title: barbershops?.name,
+    description: barbershops?.address,
+    openGraph: {
+      images: [`${barbershops?.imageUrl}`, ...previousImage]
+    }
   }
 }
 
