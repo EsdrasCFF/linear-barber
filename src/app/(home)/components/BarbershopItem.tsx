@@ -22,7 +22,7 @@ export function BarbershopItem({barbershop}: BarbershopProps) {
   }
 
   return (
-    <Card className="min-w-[167px] max-w-[167px] rounded-2xl">
+    <Card className="w-full rounded-2xl">
       <CardContent className="p-1 relative">
         <Badge className="absolute  w-54 h-25 top-3 left-3"> <StarIcon size={12}/> <span className="text-xs" >5,0</span> </Badge>
 
