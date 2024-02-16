@@ -10,6 +10,7 @@ interface BarbershopPageProps {
 }
 
 export default async function BarbershopPage({searchParams}: BarbershopPageProps) {
+  
   const barbershops = await database.barbershop.findMany({
     where: {
       name: {
@@ -20,12 +21,13 @@ export default async function BarbershopPage({searchParams}: BarbershopPageProps
   })
   
   
+  
   return (
     <>
       <Header/>
       
       <div  className="px-5 py-6">
-        <Search/>
+        <Search defaultValues={{search: searchParams.search}} />
 
         {barbershops.length < 1 ? (
           <p className="text-sm text-white p-3">Nenhuma barbearia encontrada!</p>

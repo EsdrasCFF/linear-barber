@@ -16,12 +16,19 @@ const searchFormSchema = z.object({
 
 type SearchFormData = z.infer<typeof searchFormSchema>
 
-export function Search(){
+interface SearchProps {
+  defaultValues?: {
+    search: string | undefined
+  }
+}
+
+export function Search({defaultValues}: SearchProps){
 
   const router = useRouter()
 
   const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<SearchFormData>({
-    resolver: zodResolver(searchFormSchema)
+    resolver: zodResolver(searchFormSchema),
+    defaultValues: defaultValues,
   })
 
   function handleFormSubmit(data: SearchFormData){
