@@ -32,20 +32,6 @@ export default async function Home() {
     }) : []
   ])
 
-  // const barbershops = await database.barbershop.findMany({})
-
-  // const bookings = session?.user ? await database.booking.findMany({
-  //   where: {
-  //     userId: session.user.id,
-  //     date: {
-  //       gte: new Date()
-  //     }
-  //   },
-  //   include: {
-  //     service: true,
-  //     barbershop: true
-  //   }
-  // }) : []
 
   return (
     <div>
