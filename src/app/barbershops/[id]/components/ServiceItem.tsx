@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger
 import { priceFormatter } from "@/utils/formatter"
 import { generateDayTimeList } from "@/utils/hours"
 import { Booking, Service } from "@prisma/client"
-import { format, setHours, setMinutes } from "date-fns"
+import { addDays, format, setHours, setMinutes } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { signIn, useSession } from "next-auth/react"
 import Image from "next/image"
@@ -182,7 +182,7 @@ export function ServiceItem({service, isAthenticated, barbershopName, barbershop
                     mode="single"
                     selected={date}
                     onSelect={handleDateClick}
-                    fromDate={new Date()}
+                    fromDate={addDays(new Date(), 1)}
                     className="mt-6"
                     styles={{
                       head_cell: {
