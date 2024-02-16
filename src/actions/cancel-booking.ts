@@ -15,6 +15,7 @@ export async function cancelBooking(bookingId: string) {
     return null
   }
 
+  revalidatePath('/')
   revalidatePath('/bookings')
 
   return canceledBooking;

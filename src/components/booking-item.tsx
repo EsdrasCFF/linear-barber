@@ -14,6 +14,7 @@ import { cancelBooking } from "@/actions/cancel-booking";
 import { toast } from "./ui/use-toast";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
@@ -78,7 +79,7 @@ export function BookingItem({booking, variant}: BookingItemProps) {
         </Card>
       </SheetTrigger>
       
-      <SheetContent className="px-0" >
+      <SheetContent className="px-0 rounded-xl" >
         <SheetHeader className="border-b border-solid pb-6"> 
           Informações da Reserva 
         </SheetHeader>
@@ -144,10 +145,32 @@ export function BookingItem({booking, variant}: BookingItemProps) {
             <Button variant='outline' className="w-full" >Voltar</Button>
           </SheetClose>
           
-          <Button variant='destructive' disabled={!!variant || deleteIsLoaging} className="w-full" onClick={handleCancelCLick} >
-            {deleteIsLoaging && <Loader2 className="mr-2 h-4 w-4 animate-spin" /> }
-            Cancelar
-          </Button>
+
+          <Dialog>
+            <DialogTrigger asChild>
+            <Button variant='destructive' disabled={!!variant || deleteIsLoaging} className="w-full"  >
+              {deleteIsLoaging && <Loader2 className="mr-2 h-4 w-4 animate-spin" /> }
+              Cancelar
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-[80%] rounded-lg" >
+              <DialogHeader>
+                <DialogTitle>Cancelar Reserva</DialogTitle>
+                <DialogDescription>
+                  Tem certeza que deseja cancelar esse agendamento?
+                </DialogDescription>
+              </DialogHeader>
+
+              <DialogFooter className="flex flex-row gap-2">
+                <DialogClose asChild>
+                  <Button className="w-full" variant='secondary' >Voltar</Button>
+                </DialogClose>
+                <Button className="w-full" variant='destructive' onClick={handleCancelCLick}>Confirmar</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          
         </SheetFooter>
       </SheetContent>
     </Sheet>
