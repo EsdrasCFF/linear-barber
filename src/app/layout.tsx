@@ -24,7 +24,9 @@ export default function RootLayout({
       <body className={`${mulish.className} dark`}>
         <AuthProvider>
           <Toaster/>
-          {children}
+          <div className='flex flex-1' >
+            {children}
+          </div>
           <Footer/>
         </AuthProvider>
       </body>
