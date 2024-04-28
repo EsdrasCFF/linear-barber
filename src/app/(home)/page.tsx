@@ -54,7 +54,7 @@ export default async function Home() {
       <div className='mt-6 px-5'>
         <h2 className='font-bold text-gray3 mt-9 mb-3 uppercase'>Agendamentos</h2>
 
-        <div className='flex gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden' >
+        <div className='flex gap-2 overflow-x-auto' >
           {bookings.map((booking) => (
             <BookingItem key={booking.id} booking={booking} />
           ))}

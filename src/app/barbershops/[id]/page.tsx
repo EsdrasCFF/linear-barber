@@ -12,25 +12,25 @@ interface BarbershopDetailsProps {
   }
 }
 
-export async function generateMetada({params}: BarbershopDetailsProps, parent: ResolvedMetadata): Promise<Metadata> {
-  const id = params.id
+// export async function generateMetada({params}: BarbershopDetailsProps, parent: ResolvedMetadata): Promise<Metadata> {
+//   const id = params.id
 
-  const barbershops = await database.barbershop.findUnique({
-    where: {
-      id
-    }
-  })
+//   const barbershops = await database.barbershop.findUnique({
+//     where: {
+//       id
+//     }
+//   })
 
-  const previousImage = (await parent).openGraph?.images || []
+//   const previousImage = (await parent).openGraph?.images || []
 
-  return {
-    title: barbershops?.name,
-    description: barbershops?.address,
-    openGraph: {
-      images: [`${barbershops?.imageUrl}`, ...previousImage]
-    }
-  }
-}
+//   return {
+//     title: barbershops?.name,
+//     description: barbershops?.address,
+//     openGraph: {
+//       images: [`${barbershops?.imageUrl}`, ...previousImage]
+//     }
+//   }
+// }
 
 export default async function BarbershopDetailsPage({params}: BarbershopDetailsProps) {
   const session = await getServerSession(authOptions)
